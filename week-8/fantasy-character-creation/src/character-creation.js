@@ -15,17 +15,34 @@
  */
 
 // For callbacks:
-/*
+
 const fs = require('fs');
+const path=require("path")
 
 function createCharacter(character, callback) {
   // TODO: Implement this function
+  fs.writeFile(path.join(__dirname,"character.json"), JSON.stringify(character), (error)=> {
+if (error||!character.class){
+callback("couldnt create character")
+return 
+}
+callback(character)
+  })
 }
 
 function getCharacters(callback) {
   // TODO: Implement this function
+  fs.readFile(path.join(__dirname, "character.json"), "utf8", (error, data)=> {
+   
+    if (error){
+      console.log("couldnt read character")
+      return 
+      }
+      const character=JSON.parse(data)
+      callback(character)
+  })
 }
-*/
+
 
 // For promises:
 /*
@@ -42,5 +59,5 @@ async function getCharacters() {
 
 // Uncomment the appropriate exports depending on whether you're using callbacks or promises:
 
-// module.exports = { createCharacter, getCharacters }; // For callbacks
-// module.exports = { createCharacter, getCharacters }; // For promises
+module.exports = { createCharacter, getCharacters }; // For callbacks
+//module.exports = { createCharacter, getCharacters }; // For promises
